@@ -31,10 +31,8 @@ public class PayServlet extends HttpServlet {
         asyncContext.start(() -> {
             System.out.println("副线程开始执行:::" + Thread.currentThread() + ":::::::" + System.currentTimeMillis());
             doBusiness();
-            //asyncContext.complete(); //异步操作执行结束 通知容器
-            AsyncContext reqAsyncContext = req.getAsyncContext();
-
-            ServletResponse response = reqAsyncContext.getResponse();
+            asyncContext.complete(); //异步操作执行结束 通知容器
+            ServletResponse response = asyncContext.getResponse();
             try {
                 response.getWriter().write("hello world");
             } catch (IOException e) {
